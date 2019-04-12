@@ -6,6 +6,7 @@ import io.github.jhipster.application.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,7 +61,7 @@ public class MocksResource {
      * or with status 500 (Internal Server Error) if the mocks couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/mocks")
+    @PutMapping(value = "/mocks", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Mocks> updateMocks(@RequestBody Mocks mocks) throws URISyntaxException {
         log.debug("REST request to update Mocks : {}", mocks);
         if (mocks.getId() == null) {

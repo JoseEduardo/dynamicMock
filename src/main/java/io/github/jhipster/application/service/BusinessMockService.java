@@ -2,6 +2,7 @@ package io.github.jhipster.application.service;
 
 import io.github.jhipster.application.domain.Marketplaces;
 import io.github.jhipster.application.domain.Mocks;
+import io.github.jhipster.application.domain.MocksHeader;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,9 +47,9 @@ public class BusinessMockService {
         if (optMockedCall.isPresent()) {
             Mocks mockedCall = optMockedCall.get();
 
-            Map<String, String> responseHeaders = mockedCall.getResponse_headers();
+            List<MocksHeader> responseHeaders = mockedCall.getResponse_headers();
             HttpHeaders respHeader = new HttpHeaders();
-            responseHeaders.forEach(respHeader::add);
+            responseHeaders.forEach(x -> respHeader.add(x.getKey(), x.getValue()));
 
             HttpStatus httpStatus = HttpStatus.valueOf(Integer.valueOf(mockedCall.getResponse_status()));
             return new ResponseEntity(mockedCall.getResponse_body(), respHeader, httpStatus);
@@ -62,10 +64,10 @@ public class BusinessMockService {
         mocks.setMethod(request.getMethod());
         mocks.setRequest_body(body);
         mocks.setRequest_url(newURI.toString());
-        mocks.setRequest_headers(headers);
+        mocks.setRequestHeadersByHeader(headers);
         mocks.setResponse_status(retObject.getStatusCode().toString());
         mocks.setResponse_body(isNull(retObject.getBody()) ? "" : new ObjectMapper().writeValueAsString(retObject.getBody()));
-        mocks.setResponse_headers(retObject.getHeaders());
+        mocks.setResponseHeadersByHeader(retObject.getHeaders());
 
         mocksService.save(mocks);
         return retObject;

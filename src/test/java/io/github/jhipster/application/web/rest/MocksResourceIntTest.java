@@ -3,6 +3,7 @@ package io.github.jhipster.application.web.rest;
 import io.github.jhipster.application.DynamicMockApp;
 
 import io.github.jhipster.application.domain.Mocks;
+import io.github.jhipster.application.domain.MocksHeader;
 import io.github.jhipster.application.repository.MocksRepository;
 import io.github.jhipster.application.web.rest.errors.ExceptionTranslator;
 
@@ -20,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.Validator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,14 +48,14 @@ public class MocksResourceIntTest {
     private static final String DEFAULT_REQUEST_URL = "AAAAAAAAAA";
     private static final String UPDATED_REQUEST_URL = "BBBBBBBBBB";
 
-    private static final Map<String, String> DEFAULT_REQUEST_HEADERS = new HashMap<>();
-    private static final Map<String, String> UPDATED_REQUEST_HEADERS = new HashMap<>();
+    private static final List<MocksHeader> DEFAULT_REQUEST_HEADERS = new ArrayList<>();
+    private static final List<MocksHeader> UPDATED_REQUEST_HEADERS = new ArrayList<>();
 
     private static final String DEFAULT_REQUEST_BODY = "AAAAAAAAAA";
     private static final String UPDATED_REQUEST_BODY = "BBBBBBBBBB";
 
-    private static final Map<String, String> DEFAULT_RESPONSE_HEADERS = new HashMap<>();
-    private static final Map<String, String> UPDATED_RESPONSE_HEADERS = new HashMap<>();
+    private static final List<MocksHeader> DEFAULT_RESPONSE_HEADERS = new ArrayList<>();
+    private static final List<MocksHeader> UPDATED_RESPONSE_HEADERS = new ArrayList<>();
 
     private static final String DEFAULT_RESPONSE_BODY = "AAAAAAAAAA";
     private static final String UPDATED_RESPONSE_BODY = "BBBBBBBBBB";

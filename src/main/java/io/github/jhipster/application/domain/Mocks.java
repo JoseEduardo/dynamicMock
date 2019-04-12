@@ -7,9 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.http.HttpHeaders;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * A Mocks.
@@ -29,13 +27,13 @@ public class Mocks implements Serializable {
     private String request_url;
 
     @Field("request_headers")
-    private Map<String, String> request_headers;
+    private List<MocksHeader> request_headers;
 
     @Field("request_body")
     private String request_body;
 
     @Field("response_headers")
-    private Map<String, String> response_headers;
+    private List<MocksHeader> response_headers;
 
     @Field("response_body")
     private String response_body;
@@ -78,25 +76,25 @@ public class Mocks implements Serializable {
         this.request_url = request_url;
     }
 
-    public Map<String, String> getRequest_headers() {
+    public List<MocksHeader> getRequest_headers() {
         return request_headers;
     }
 
-    public Mocks request_headers(Map<String, String> request_headers) {
+    public Mocks request_headers(List<MocksHeader> request_headers) {
         this.request_headers = request_headers;
         return this;
     }
 
-    public void setRequest_headers(Map<String, String> request_headers) {
+    public void setRequest_headers(List<MocksHeader> request_headers) {
         this.request_headers = request_headers;
     }
 
-    public void setRequest_headers(HttpHeaders headers) {
-        Map<String, String> mpHeaders = new HashMap<>();
+    public void setRequestHeadersByHeader(HttpHeaders headers) {
+        ArrayList<MocksHeader> mpHeaders = new ArrayList<>();
         headers.forEach((key, value) -> {
             String newValue = value.toString().replace("[", "");
             newValue = newValue.replace("]", "");
-            mpHeaders.put(key, newValue);
+            mpHeaders.add(new MocksHeader(key, newValue));
         });
         this.request_headers = mpHeaders;
     }
@@ -114,25 +112,25 @@ public class Mocks implements Serializable {
         this.request_body = request_body;
     }
 
-    public Map<String, String> getResponse_headers() {
+    public List<MocksHeader> getResponse_headers() {
         return response_headers;
     }
 
-    public Mocks response_headers(Map<String, String> response_headers) {
+    public Mocks response_headers(List<MocksHeader> response_headers) {
         this.response_headers = response_headers;
         return this;
     }
 
-    public void setResponse_headers(Map<String, String> response_headers) {
+    public void setResponse_headers(List<MocksHeader> response_headers) {
         this.response_headers = response_headers;
     }
 
-    public void setResponse_headers(HttpHeaders headers) {
-        Map<String, String> mpHeaders = new HashMap<>();
+    public void setResponseHeadersByHeader(HttpHeaders headers) {
+        ArrayList<MocksHeader> mpHeaders = new ArrayList<>();
         headers.forEach((key, value) -> {
             String newValue = value.toString().replace("[", "");
             newValue = newValue.replace("]", "");
-            mpHeaders.put(key, newValue);
+            mpHeaders.add(new MocksHeader(key, newValue));
         });
         this.response_headers = mpHeaders;
     }
