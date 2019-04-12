@@ -4,20 +4,24 @@
             <h2 id="jhi-mocks-heading">Create or edit a Mocks</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!mocks.id">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                        [(ngModel)]="mocks.id" readonly />
-                </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="field_method">Method</label>
-                    <input type="text" class="form-control" name="method" id="field_method"
-                        [(ngModel)]="mocks.method" />
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="form-control-label" for="field_method">Method</label>
+                            <input type="text" class="form-control" name="method" id="field_method"
+                                [(ngModel)]="mocks.method" />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-control-label" for="field_response_status">Response Status</label>
+                            <input type="text" class="form-control" name="response_status" id="field_response_status"
+                                   [(ngModel)]="mocks.response_status" />
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_request_url">Request Url</label>
                     <input type="text" class="form-control" name="request_url" id="field_request_url"
-                        [(ngModel)]="mocks.request_url" />
+                           [(ngModel)]="mocks.request_url" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_request_headers">Request Headers</label>
@@ -26,8 +30,8 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_request_body">Request Body</label>
-                    <input type="text" class="form-control" name="request_body" id="field_request_body"
-                        [(ngModel)]="mocks.request_body" />
+                    <textarea type="text" class="form-control" name="request_body" id="field_request_body"
+                        [(ngModel)]="mocks.request_body"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_response_headers">Response Headers</label>
@@ -36,14 +40,8 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_response_body">Response Body</label>
-                    <input type="text" class="form-control" name="response_body" id="field_response_body"
-                        [(ngModel)]="mocks.response_body" />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_response_status">Response Status</label>
-                    <input type="text" class="form-control" name="response_status" id="field_response_status"
-                        [(ngModel)]="mocks.response_status" />
-                </div>
+                    <textarea type="text" class="form-control" name="response_body" id="field_response_body"
+                        [(ngModel)]="mocks.response_body"></textarea>
 
             </div>
             <div>
