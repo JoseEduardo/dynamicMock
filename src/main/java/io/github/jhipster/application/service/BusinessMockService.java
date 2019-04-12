@@ -4,6 +4,8 @@ import io.github.jhipster.application.domain.Marketplaces;
 import io.github.jhipster.application.domain.Mocks;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,7 +30,7 @@ public class BusinessMockService {
     @Autowired
     private MarketplacesService marketplacesService;
 
-    public ResponseEntity<Object> doProcessRequest(Map<String, String> reqParam, String body, HttpServletRequest request) throws URISyntaxException, NotFoundException {
+    public ResponseEntity<Object> doProcessRequest(Map<String, String> reqParam, String body, HttpServletRequest request) throws URISyntaxException, NotFoundException, JsonProcessingException {
         final HttpHeaders headers = new HttpHeaders();
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
@@ -46,9 +47,10 @@ public class BusinessMockService {
 
             Map<String, String> responseHeaders = mockedCall.getResponse_headers();
             HttpHeaders respHeader = new HttpHeaders();
-            responseHeaders.forEach((key, value) -> respHeader.add(value, key));
+            responseHeaders.forEach(respHeader::add);
 
-            return new ResponseEntity(mockedCall.getResponse_body(), respHeader, HttpStatus.OK);
+            HttpStatus httpStatus = HttpStatus.valueOf(Integer.valueOf(mockedCall.getResponse_status()));
+            return new ResponseEntity(mockedCall.getResponse_body(), respHeader, httpStatus);
         }
 
         RequestEntity<Object> newRequest = new RequestEntity<>(body, headers, HttpMethod.valueOf(request.getMethod()), newURI);
@@ -62,7 +64,7 @@ public class BusinessMockService {
         mocks.setRequest_url(newURI.toString());
         mocks.setRequest_headers(headers);
         mocks.setResponse_status(retObject.getStatusCode().toString());
-        mocks.setResponse_body(isNull(retObject.getBody()) ? "" : retObject.getBody().toString());
+        mocks.setResponse_body(isNull(retObject.getBody()) ? "" : new ObjectMapper().writeValueAsString(retObject.getBody()));
         mocks.setResponse_headers(retObject.getHeaders());
 
         mocksService.save(mocks);

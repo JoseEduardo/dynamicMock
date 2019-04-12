@@ -93,7 +93,11 @@ public class Mocks implements Serializable {
 
     public void setRequest_headers(HttpHeaders headers) {
         Map<String, String> mpHeaders = new HashMap<>();
-        headers.forEach((key, value) -> mpHeaders.put(key, value.toString()));
+        headers.forEach((key, value) -> {
+            String newValue = value.toString().replace("[", "");
+            newValue = newValue.replace("]", "");
+            mpHeaders.put(key, newValue);
+        });
         this.request_headers = mpHeaders;
     }
 
@@ -125,7 +129,11 @@ public class Mocks implements Serializable {
 
     public void setResponse_headers(HttpHeaders headers) {
         Map<String, String> mpHeaders = new HashMap<>();
-        headers.forEach((key, value) -> mpHeaders.put(key, value.toString()));
+        headers.forEach((key, value) -> {
+            String newValue = value.toString().replace("[", "");
+            newValue = newValue.replace("]", "");
+            mpHeaders.put(key, newValue);
+        });
         this.response_headers = mpHeaders;
     }
 

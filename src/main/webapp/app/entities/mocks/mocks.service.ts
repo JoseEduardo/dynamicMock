@@ -16,10 +16,24 @@ export class MocksService {
     constructor(protected http: HttpClient) {}
 
     create(mocks: IMocks): Observable<EntityResponseType> {
+        console.log("BATATA");
+        var requestHeaders = [];
+        for (const header in mocks.request_headers) {
+            //requestHeaders.push()
+            console.log(header);
+        }
+
         return this.http.post<IMocks>(this.resourceUrl, mocks, { observe: 'response' });
     }
 
     update(mocks: IMocks): Observable<EntityResponseType> {
+        console.log("BATATA");
+        var requestHeaders = [];
+        for (const header in mocks.request_headers) {
+            //requestHeaders.push()
+            console.log(header);
+        }
+
         return this.http.put<IMocks>(this.resourceUrl, mocks, { observe: 'response' });
     }
 
