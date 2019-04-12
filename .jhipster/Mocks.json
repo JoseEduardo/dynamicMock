@@ -1,0 +1,44 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "method",
+            "fieldType": "String",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldName": "request_url",
+            "fieldType": "String",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldName": "request_headers",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "request_body",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "response_headers",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "response_body",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "response_status",
+            "fieldType": "String"
+        }
+    ],
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "mocks",
+    "databaseType": "mongodb",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}

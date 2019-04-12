@@ -4,6 +4,54 @@ import { RouterModule } from '@angular/router';
 @NgModule({
     imports: [
         RouterModule.forChild([
+            {
+                path: 'mocks',
+                loadChildren: './mocks/mocks.module#DynamicMockMocksModule'
+            },
+            {
+                path: 'mocks',
+                loadChildren: './mocks/mocks.module#DynamicMockMocksModule'
+            },
+            {
+                path: 'marketplaces',
+                loadChildren: './marketplaces/marketplaces.module#DynamicMockMarketplacesModule'
+            },
+            {
+                path: 'mocks',
+                loadChildren: './mocks/mocks.module#DynamicMockMocksModule'
+            },
+            {
+                path: 'mocks',
+                loadChildren: './mocks/mocks.module#DynamicMockMocksModule'
+            },
+            {
+                path: 'mocks',
+                loadChildren: './mocks/mocks.module#DynamicMockMocksModule'
+            },
+            {
+                path: 'mocks',
+                loadChildren: './mocks/mocks.module#DynamicMockMocksModule'
+            },
+            {
+                path: 'mocks',
+                loadChildren: './mocks/mocks.module#DynamicMockMocksModule'
+            },
+            {
+                path: 'mocks',
+                loadChildren: './mocks/mocks.module#DynamicMockMocksModule'
+            },
+            {
+                path: 'mocks',
+                loadChildren: './mocks/mocks.module#DynamicMockMocksModule'
+            },
+            {
+                path: 'mocks',
+                loadChildren: './mocks/mocks.module#DynamicMockMocksModule'
+            },
+            {
+                path: 'mocks',
+                loadChildren: './mocks/mocks.module#DynamicMockMocksModule'
+            }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])
     ],

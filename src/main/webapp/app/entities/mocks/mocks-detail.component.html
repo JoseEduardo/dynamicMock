@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="mocks">
+            <h2><span>Mocks</span> {{mocks.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Method</span></dt>
+                <dd>
+                    <span>{{mocks.method}}</span>
+                </dd>
+                <dt><span>Request Url</span></dt>
+                <dd>
+                    <span>{{mocks.request_url}}</span>
+                </dd>
+                <dt><span>Request Headers</span></dt>
+                <dd>
+                    <span>{{mocks.request_headers}}</span>
+                </dd>
+                <dt><span>Request Body</span></dt>
+                <dd>
+                    <span>{{mocks.request_body}}</span>
+                </dd>
+                <dt><span>Response Headers</span></dt>
+                <dd>
+                    <span>{{mocks.response_headers}}</span>
+                </dd>
+                <dt><span>Response Body</span></dt>
+                <dd>
+                    <span>{{mocks.response_body}}</span>
+                </dd>
+                <dt><span>Response Status</span></dt>
+                <dd>
+                    <span>{{mocks.response_status}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/mocks', mocks.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
