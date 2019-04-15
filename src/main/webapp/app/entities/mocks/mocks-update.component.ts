@@ -13,6 +13,8 @@ import { MocksService } from './mocks.service';
 export class MocksUpdateComponent implements OnInit {
     mocks: IMocks;
     isSaving: boolean;
+    reqHeaderNew = {};
+    resHeaderNew = {};
 
     constructor(protected mocksService: MocksService, protected activatedRoute: ActivatedRoute) {}
 
@@ -21,6 +23,54 @@ export class MocksUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ mocks }) => {
             this.mocks = mocks;
         });
+    }
+
+    removeReqHeader(header) {
+        for (var i = 0; i < this.mocks.request_headers.length; i++) {
+            if(this.mocks.request_headers[i].key == header.key) {
+                this.mocks.request_headers.splice(i,1);
+                break;
+            }
+        }
+    }
+
+    saveReqHeader(header) {
+        for (var i = 0; i < this.mocks.request_headers.length; i++) {
+            if(this.mocks.request_headers[i].key == header.key) {
+                this.mocks.request_headers[i].key   = header.key;
+                this.mocks.request_headers[i].value = header.value;
+                break;
+            }
+        }
+    }
+
+    addReqHeader() {
+        this.mocks.request_headers.push(this.reqHeaderNew);
+        this.reqHeaderNew = {};
+    }
+
+    removeResHeader(header) {
+        for (var i = 0; i < this.mocks.response_headers.length; i++) {
+            if(this.mocks.response_headers[i].key == header.key) {
+                this.mocks.response_headers.splice(i,1);
+                break;
+            }
+        }
+    }
+
+    saveResHeader(header) {
+        for (var i = 0; i < this.mocks.response_headers.length; i++) {
+            if(this.mocks.response_headers[i].key == header.key) {
+                this.mocks.response_headers[i].key   = header.key;
+                this.mocks.response_headers[i].value = header.value;
+                break;
+            }
+        }
+    }
+
+    addResHeader() {
+        this.mocks.response_headers.push(this.resHeaderNew);
+        this.resHeaderNew = {};
     }
 
     previousState() {

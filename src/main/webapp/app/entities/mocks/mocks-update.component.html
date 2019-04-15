@@ -25,8 +25,38 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_request_headers">Request Headers</label>
-                    <input type="text" class="form-control" name="request_headers" id="field_request_headers"
-                        [(ngModel)]="mocks.request_headers" />
+                    <div *ngFor="let reqHeaders of mocks.request_headers;">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="{{reqHeaders.key}}" id="reqHeaderKey" [(ngModel)]="reqHeaders.key">
+                                    <input type="text" class="form-control" name="{{reqHeaders.value}}" id="reqHeaderValue" [(ngModel)]="reqHeaders.value">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" id="saveReq" class="btn btn-primary"  (click)="saveReqHeader(reqHeaders)">
+                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;
+                                </button>
+                                <button type="button" id="deleteReq" class="btn btn-danger"  (click)="removeReqHeader(reqHeaders)">
+                                    <fa-icon [icon]="'times'"></fa-icon>&nbsp;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="reqHeaderKeyNew" id="reqHeaderKeyNew" [(ngModel)]="reqHeaderNew.key">
+                                <input type="text" class="form-control" name="reqHeaderValueNew" id="reqHeaderValueNew" [(ngModel)]="reqHeaderNew.value">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" id="saveNewReq" class="btn btn-success"  (click)="addReqHeader()">
+                                <fa-icon [icon]="'save'"></fa-icon>&nbsp;
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_request_body">Request Body</label>
@@ -35,8 +65,38 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_response_headers">Response Headers</label>
-                    <input type="text" class="form-control" name="response_headers" id="field_response_headers"
-                        [(ngModel)]="mocks.response_headers" />
+                    <div *ngFor="let resHeaders of mocks.response_headers;">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="{{resHeaders.key}}" id="resHeaderKey" [(ngModel)]="resHeaders.key">
+                                    <input type="text" class="form-control" name="{{resHeaders.value}}" id="resHeaderValue" [(ngModel)]="resHeaders.value">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" id="saveRes" class="btn btn-primary"  (click)="saveResHeader(resHeaders)">
+                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;
+                                </button>
+                                <button type="button" id="deleteRes" class="btn btn-danger"  (click)="removeResHeader(resHeaders)">
+                                    <fa-icon [icon]="'times'"></fa-icon>&nbsp;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="reqHeaderKeyNew" id="resHeaderKeyNew" [(ngModel)]="resHeaderNew.key">
+                                <input type="text" class="form-control" name="reqHeaderValueNew" id="resHeaderValueNew" [(ngModel)]="resHeaderNew.value">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" id="saveNewRes" class="btn btn-success"  (click)="addResHeader()">
+                                <fa-icon [icon]="'save'"></fa-icon>&nbsp;
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_response_body">Response Body</label>
