@@ -29,15 +29,15 @@
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="{{reqHeaders.key}}" id="reqHeaderKey" [(ngModel)]="reqHeaders.key">
-                                    <input type="text" class="form-control" name="{{reqHeaders.value}}" id="reqHeaderValue" [(ngModel)]="reqHeaders.value">
+                                    <input type="text" class="form-control" disabled="" name="{{reqHeaders.key}}" id="reqHeaderKey" [(ngModel)]="reqHeaders.key">
+                                    <input type="text" class="form-control" disabled="" name="{{reqHeaders.value}}" id="reqHeaderValue" [(ngModel)]="reqHeaders.value">
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <button type="button" id="saveReq" class="btn btn-primary"  (click)="saveReqHeader(reqHeaders)">
+                                <button type="button" id="saveReq" class="btn btn-primary" disabled="" (click)="saveReqHeader(reqHeaders)">
                                     <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;
                                 </button>
-                                <button type="button" id="deleteReq" class="btn btn-danger"  (click)="removeReqHeader(reqHeaders)">
+                                <button type="button" id="deleteReq" class="btn btn-danger" disabled="" (click)="removeReqHeader(reqHeaders)">
                                     <fa-icon [icon]="'times'"></fa-icon>&nbsp;
                                 </button>
                             </div>
@@ -47,12 +47,12 @@
                     <div class="row">
                         <div class="col-md-9">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="reqHeaderKeyNew" id="reqHeaderKeyNew" [(ngModel)]="reqHeaderNew.key">
-                                <input type="text" class="form-control" name="reqHeaderValueNew" id="reqHeaderValueNew" [(ngModel)]="reqHeaderNew.value">
+                                <input type="text" class="form-control" disabled="" name="reqHeaderKeyNew" id="reqHeaderKeyNew" [(ngModel)]="reqHeaderNew.key">
+                                <input type="text" class="form-control" disabled="" name="reqHeaderValueNew" id="reqHeaderValueNew" [(ngModel)]="reqHeaderNew.value">
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <button type="button" id="saveNewReq" class="btn btn-success"  (click)="addReqHeader()">
+                            <button type="button" id="saveNewReq" class="btn btn-success" disabled="" (click)="addReqHeader()">
                                 <fa-icon [icon]="'save'"></fa-icon>&nbsp;
                             </button>
                         </div>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_request_body">Request Body</label>
-                    <textarea type="text" class="form-control" name="request_body" id="field_request_body"
+                    <textarea type="text" class="form-control" disabled="" name="request_body" id="field_request_body"
                         [(ngModel)]="mocks.request_body"></textarea>
                 </div>
                 <div class="form-group">

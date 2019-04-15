@@ -19,9 +19,8 @@ public class MockAPI {
     @Autowired
     private BusinessMockService businessMockService;
 
-    @RequestMapping(value = {"/*", "/*/*", "/*/*/*", "/*/*/*/*", "/*/*/*/*/*"}, method = RequestMethod.POST, headers = "Accept=*/*")
+    @RequestMapping(value = {"/*", "/*/*", "/*/*/*", "/*/*/*/*", "/*/*/*/*/*"}, method = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS, RequestMethod.HEAD, RequestMethod.PATCH, RequestMethod.TRACE}, headers = "Accept=*/*")
     public ResponseEntity<Object> receivePostRequestOnePath(@RequestParam Map<String, String> reqParam, @RequestBody String body, HttpServletRequest request) throws URISyntaxException, NotFoundException, JsonProcessingException {
         return businessMockService.doProcessRequest(reqParam, body, request);
     }
-
 }
