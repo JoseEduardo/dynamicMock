@@ -65,7 +65,7 @@ public class BusinessElasticService {
         mocks.setResponse_body(log.getResponseBody());
 
         HttpHeaders reqHeader = new HttpHeaders();
-        mapResponseHeaders.forEach(x -> reqHeader.add(x.get(), x.getValue()));
+        mapRequestHeaders.forEach(x -> reqHeader.add(x.get(), x.getValue()));
         mocks.setRequestHeadersByHeader(reqHeader);
 
         HttpHeaders respHeader = new HttpHeaders();
