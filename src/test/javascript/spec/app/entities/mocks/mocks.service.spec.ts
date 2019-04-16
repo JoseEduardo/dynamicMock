@@ -21,7 +21,7 @@ describe('Service Tests', () => {
             service = injector.get(MocksService);
             httpMock = injector.get(HttpTestingController);
 
-            elemDefault = new Mocks('ID', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
+            elemDefault = new Mocks('ID', 'AAAAAAA', 'AAAAAAA', null, 'AAAAAAA', null, 'AAAAAAA', 'AAAAAAA');
         });
 
         describe('Service methods', async () => {
