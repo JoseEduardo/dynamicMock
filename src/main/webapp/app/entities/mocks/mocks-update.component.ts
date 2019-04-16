@@ -13,8 +13,8 @@ import { MocksService } from './mocks.service';
 export class MocksUpdateComponent implements OnInit {
     mocks: IMocks;
     isSaving: boolean;
-    reqHeaderNew = {};
-    resHeaderNew = {};
+    reqHeaderNew = new Headers();
+    resHeaderNew = new Headers();
 
     constructor(protected mocksService: MocksService, protected activatedRoute: ActivatedRoute) {}
 
@@ -54,7 +54,8 @@ export class MocksUpdateComponent implements OnInit {
         }else {
             this.mocks.request_headers.push(headers);
         }
-        this.reqHeaderNew = {};
+        this.reqHeaderNew['key'] = "";
+        this.reqHeaderNew['value'] = "";
     }
 
     removeResHeader(header) {
@@ -85,8 +86,8 @@ export class MocksUpdateComponent implements OnInit {
         }else{
             this.mocks.response_headers.push(headers);
         }
-
-        this.resHeaderNew = {};
+        this.resHeaderNew['key'] = "";
+        this.resHeaderNew['value'] = "";
     }
 
     previousState() {
