@@ -19,6 +19,8 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+
 @Service
 public class BusinessElasticService {
     private static final String URL_TEMPLATE = "http://10.2.0.170:9200/%s/_search";
@@ -38,7 +40,7 @@ public class BusinessElasticService {
 
         elasticDTO.getHits().getHits().stream()
             .map(hit -> hit.getSource().getLogMessage())
-            .filter(ht -> !mocksService.findByRequestUrlAndMethod(ht.getUrl(), ht.getHttpMethod()).isPresent())
+            .filter(ht -> !isNullOrEmpty(ht.getUrl()) && !mocksService.findByRequestUrlAndMethod(ht.getUrl(), ht.getHttpMethod()).isPresent())
             .forEach(this::createMock);
 
     }
@@ -65,12 +67,13 @@ public class BusinessElasticService {
         mocks.setResponse_body(log.getResponseBody());
 
         HttpHeaders reqHeader = new HttpHeaders();
-        mapRequestHeaders.forEach(x -> reqHeader.add(x.get(), x.getValue()));
+        mapRequestHeaders.forEach(reqHeader::add);
         mocks.setRequestHeadersByHeader(reqHeader);
 
         HttpHeaders respHeader = new HttpHeaders();
-        mapResponseHeaders.forEach(x -> respHeader.add(x.get(), x.getValue()));
+        mapResponseHeaders.forEach(respHeader::add);
         mocks.setResponseHeadersByHeader(respHeader);
+        mocks.setRequest_url(log.getUrl());
 
         mocksService.save(mocks);
     }

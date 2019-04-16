@@ -1,5 +1,6 @@
 package io.github.jhipster.application.service;
 
+import com.google.common.collect.Lists;
 import io.github.jhipster.application.domain.Marketplaces;
 import io.github.jhipster.application.domain.Mocks;
 import io.github.jhipster.application.domain.MocksHeader;
@@ -26,6 +27,7 @@ import static java.util.Objects.isNull;
 @Service
 public class BusinessMockService {
     private static final String URI_FINAL = "%s%s?%s";
+    private static final String URI_PART_FINAL = "%s?%s";
 
     @Autowired
     private MocksService mocksService;
@@ -41,9 +43,11 @@ public class BusinessMockService {
                 headers.add(headerName, request.getHeader(headerName));
             }
         }
-        URI newURI = findNewURI(request, reqParam);
+        List<String> lstUrl = findNewURI(request, reqParam);
+        URI newURI = new URI(lstUrl.get(0));
+        String relativeUrl = lstUrl.get(1);
 
-        Optional<Mocks> optMockedCall = mocksService.findByRequestUrlAndMethod(newURI.toString(), request.getMethod());
+        Optional<Mocks> optMockedCall = mocksService.findByRequestUrlAndMethod(relativeUrl, request.getMethod());
         if (optMockedCall.isPresent()) {
             Mocks mockedCall = optMockedCall.get();
 
@@ -63,7 +67,7 @@ public class BusinessMockService {
         Mocks mocks = new Mocks();
         mocks.setMethod(request.getMethod());
         mocks.setRequest_body(body);
-        mocks.setRequest_url(newURI.toString());
+        mocks.setRequest_url(relativeUrl);
         mocks.setRequestHeadersByHeader(headers);
         mocks.setResponse_status(retObject.getStatusCode().toString());
         mocks.setResponse_body(isNull(retObject.getBody()) ? "" : new ObjectMapper().writeValueAsString(retObject.getBody()));
@@ -73,7 +77,7 @@ public class BusinessMockService {
         return retObject;
     }
 
-    private URI findNewURI(HttpServletRequest request, Map<String, String> reqParam) throws URISyntaxException, NotFoundException {
+    private List<String> findNewURI(HttpServletRequest request, Map<String, String> reqParam) throws URISyntaxException, NotFoundException {
         String relPath = request.getRequestURI();
         String relPathWtotMock = relPath.replace("/mock", "");
         String marketplaceName = relPathWtotMock.replace("/", "");
@@ -89,7 +93,9 @@ public class BusinessMockService {
             .collect(Collectors.joining("&"));
 
         String resultUrl = String.format(URI_FINAL, marketplaceUrl, relPathWtotMock, requestParam);
-        return new URI(resultUrl);
+        String resultPartUrl = String.format(URI_PART_FINAL, relPathWtotMock, requestParam);
+
+        return Lists.newArrayList(resultUrl, resultPartUrl);
     }
 
 }
