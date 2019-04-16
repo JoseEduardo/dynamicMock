@@ -27,7 +27,7 @@ export class MocksUpdateComponent implements OnInit {
 
     removeReqHeader(header) {
         for (var i = 0; i < this.mocks.request_headers.length; i++) {
-            if(this.mocks.request_headers[i]['key'] == header.key) {
+            if(this.mocks.request_headers[i].key == header.key) {
                 this.mocks.request_headers.splice(i,1);
                 break;
             }
@@ -36,7 +36,7 @@ export class MocksUpdateComponent implements OnInit {
 
     saveReqHeader(header) {
         for (var i = 0; i < this.mocks.request_headers.length; i++) {
-            if(this.mocks.request_headers[i]['key'] == header.key) {
+            if(this.mocks.request_headers[i].key == header.key) {
                 this.mocks.request_headers[i].key   = header.key;
                 this.mocks.request_headers[i].value = header.value;
                 break;
@@ -45,17 +45,21 @@ export class MocksUpdateComponent implements OnInit {
     }
 
     addReqHeader() {
+        let headers = new Headers();
+        headers.key = this.reqHeaderNew['key'];
+        headers.value = this.reqHeaderNew['value'];
+
         if(this.mocks.request_headers == undefined) {
-            this.mocks.request_headers = [this.reqHeaderNew];
+            this.mocks.request_headers = [headers];
         }else {
-            this.mocks.request_headers.push(this.reqHeaderNew);
+            this.mocks.request_headers.push(headers);
         }
         this.reqHeaderNew = {};
     }
 
     removeResHeader(header) {
         for (var i = 0; i < this.mocks.response_headers.length; i++) {
-            if(this.mocks.response_headers[i]['key'] == header.key) {
+            if(this.mocks.response_headers[i].key == header.key) {
                 this.mocks.response_headers.splice(i,1);
                 break;
             }
@@ -64,7 +68,7 @@ export class MocksUpdateComponent implements OnInit {
 
     saveResHeader(header) {
         for (var i = 0; i < this.mocks.response_headers.length; i++) {
-            if(this.mocks.response_headers[i]['key'] == header.key) {
+            if(this.mocks.response_headers[i].key == header.key) {
                 this.mocks.response_headers[i].key   = header.key;
                 this.mocks.response_headers[i].value = header.value;
                 break;
@@ -73,10 +77,13 @@ export class MocksUpdateComponent implements OnInit {
     }
 
     addResHeader() {
+        let headers = new Headers();
+        headers.key = this.resHeaderNew['key'];
+        headers.value = this.resHeaderNew['value'];
         if(this.mocks.response_headers == undefined) {
-            this.mocks.response_headers = [this.resHeaderNew];
+            this.mocks.response_headers = [headers];
         }else{
-            this.mocks.response_headers.push(this.resHeaderNew);
+            this.mocks.response_headers.push(headers);
         }
 
         this.resHeaderNew = {};

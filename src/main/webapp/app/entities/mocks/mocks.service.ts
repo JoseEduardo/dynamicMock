@@ -16,24 +16,20 @@ export class MocksService {
     constructor(protected http: HttpClient) {}
 
     create(mocks: IMocks): Observable<EntityResponseType> {
-        console.log(mocks.request_headers);
-
-        var requestHeaders = [];
-        for (var i = 0; i < mocks.request_headers.length; i++) {
-            //requestHeaders.push()
-            console.log(mocks.request_headers.length[i]);
+        if(mocks.request_headers != undefined) {
+            for (var i = 0; i < mocks.request_headers.length; i++) {
+                console.log(mocks.request_headers.length[i]);
+            }
         }
 
         return this.http.post<IMocks>(this.resourceUrl, mocks, { observe: 'response' });
     }
 
     update(mocks: IMocks): Observable<EntityResponseType> {
-        console.log(mocks.request_headers);
-
-        var requestHeaders = [];
-        for (var i = 0; i < mocks.request_headers.length; i++) {
-            //requestHeaders.push()
-            console.log(mocks.request_headers.length[i]);
+        if(mocks.request_headers != undefined) {
+            for (var i = 0; i < mocks.request_headers.length; i++) {
+                console.log(mocks.request_headers.length[i]);
+            }
         }
 
         return this.http.put<IMocks>(this.resourceUrl, mocks, { observe: 'response' });
