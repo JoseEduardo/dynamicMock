@@ -45,6 +45,9 @@ export class MocksUpdateComponent implements OnInit {
     }
 
     addReqHeader() {
+        if(this.mocks.request_headers == undefined) {
+            this.mocks.request_headers = [];
+        }
         this.mocks.request_headers.push(this.reqHeaderNew);
         this.reqHeaderNew = {};
     }
@@ -69,6 +72,9 @@ export class MocksUpdateComponent implements OnInit {
     }
 
     addResHeader() {
+        if(this.mocks.response_headers == undefined) {
+            this.mocks.response_headers = [];
+        }
         this.mocks.response_headers.push(this.resHeaderNew);
         this.resHeaderNew = {};
     }
