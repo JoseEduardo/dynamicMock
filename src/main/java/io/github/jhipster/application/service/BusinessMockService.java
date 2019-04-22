@@ -5,6 +5,8 @@ import io.github.jhipster.application.domain.Marketplaces;
 import io.github.jhipster.application.domain.Mocks;
 import io.github.jhipster.application.domain.MocksHeader;
 import javassist.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +28,8 @@ import static java.util.Objects.isNull;
 
 @Service
 public class BusinessMockService {
+    private final Logger log = LoggerFactory.getLogger(BusinessMockService.class);
+
     private static final String URI_FINAL = "%s%s?%s";
     private static final String URI_PART_FINAL = "%s?%s";
 
@@ -46,6 +50,8 @@ public class BusinessMockService {
         List<String> lstUrl = findNewURI(request, reqParam);
         URI newURI = new URI(lstUrl.get(0));
         String relativeUrl = lstUrl.get(1);
+
+        log.info("Processando chamada {}", relativeUrl);
 
         Optional<Mocks> optMockedCall = mocksService.findByRequestUrlAndMethod(relativeUrl, request.getMethod());
         if (optMockedCall.isPresent()) {
@@ -74,6 +80,7 @@ public class BusinessMockService {
         mocks.setResponseHeadersByHeader(retObject.getHeaders());
 
         mocksService.save(mocks);
+        log.info("Retornando Conteudo chamada {}", relativeUrl);
         return retObject;
     }
 
@@ -82,17 +89,19 @@ public class BusinessMockService {
         String relPathWtotMock = relPath.replace("/mock", "");
         String marketplaceName = relPathWtotMock.replace("/", "");
 
-        String marketplaceUrl = marketplacesService.findAll().stream()
+        Marketplaces marketplaces = marketplacesService.findAll().stream()
             .filter(mkt -> marketplaceName.contains(mkt.getMarketplace()))
-            .map(Marketplaces::getMarketplace_url)
             .findFirst()
             .orElseThrow(() -> new NotFoundException(String.format("Marketplace %s não configurado", marketplaceName)));
+        String marketplaceUrl = marketplaces.getMarketplace_url();
 
         String requestParam = reqParam.entrySet().stream()
             .map(header -> header.getKey().concat("=").concat(header.getValue()))
             .collect(Collectors.joining("&"));
 
-        String resultUrl = String.format(URI_FINAL, marketplaceUrl, relPathWtotMock, requestParam);
+        String finalPath = relPathWtotMock.replace("/" + marketplaces.getMarketplace(), "");
+        String resultUrl = String.format(URI_FINAL, marketplaceUrl, finalPath, requestParam);
+
         String resultPartUrl = String.format(URI_PART_FINAL, relPathWtotMock, requestParam);
 
         return Lists.newArrayList(resultUrl, resultPartUrl);
