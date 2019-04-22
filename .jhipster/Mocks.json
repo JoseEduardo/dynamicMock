@@ -32,6 +32,11 @@
         {
             "fieldName": "response_status",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "marketplace",
+            "fieldType": "String",
+            "fieldValidateRules": []
         }
     ],
     "dto": "no",

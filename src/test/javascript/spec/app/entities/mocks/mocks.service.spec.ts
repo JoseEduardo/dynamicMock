@@ -61,7 +61,8 @@ describe('Service Tests', () => {
                         request_body: 'BBBBBB',
                         response_headers: 'BBBBBB',
                         response_body: 'BBBBBB',
-                        response_status: 'BBBBBB'
+                        response_status: 'BBBBBB',
+                        marketplace: 'BBBBBB'
                     },
                     elemDefault
                 );
@@ -84,7 +85,8 @@ describe('Service Tests', () => {
                         request_body: 'BBBBBB',
                         response_headers: 'BBBBBB',
                         response_body: 'BBBBBB',
-                        response_status: 'BBBBBB'
+                        response_status: 'BBBBBB',
+                        marketplace: 'BBBBBB'
                     },
                     elemDefault
                 );

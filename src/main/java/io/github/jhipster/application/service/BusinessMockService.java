@@ -78,6 +78,7 @@ public class BusinessMockService {
         mocks.setResponse_status(retObject.getStatusCode().toString());
         mocks.setResponse_body(isNull(retObject.getBody()) ? "" : new ObjectMapper().writeValueAsString(retObject.getBody()));
         mocks.setResponseHeadersByHeader(retObject.getHeaders());
+        mocks.setMarketplace(lstUrl.get(2));
 
         mocksService.save(mocks);
         log.info("Retornando Conteudo chamada {}", relativeUrl);
@@ -104,7 +105,7 @@ public class BusinessMockService {
 
         String resultPartUrl = String.format(URI_PART_FINAL, relPathWtotMock, requestParam);
 
-        return Lists.newArrayList(resultUrl, resultPartUrl);
+        return Lists.newArrayList(resultUrl, resultPartUrl, marketplaces.getMarketplace());
     }
 
 }

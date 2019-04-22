@@ -51,6 +51,10 @@ import { RouterModule } from '@angular/router';
             {
                 path: 'mocks',
                 loadChildren: './mocks/mocks.module#DynamicMockMocksModule'
+            },
+            {
+                path: 'mocks',
+                loadChildren: './mocks/mocks.module#DynamicMockMocksModule'
             }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])

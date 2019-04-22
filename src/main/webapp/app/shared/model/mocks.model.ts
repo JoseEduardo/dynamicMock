@@ -12,6 +12,7 @@ export interface IMocks {
     response_headers?: [Headers];
     response_body?: string;
     response_status?: string;
+    marketplace?: string;
 }
 
 export class Mocks implements IMocks {
@@ -23,6 +24,7 @@ export class Mocks implements IMocks {
         public request_body?: string,
         public response_headers?: [Headers],
         public response_body?: string,
-        public response_status?: string
+        public response_status?: string,
+        public marketplace?: string
     ) {}
 }

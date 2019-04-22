@@ -15,6 +15,7 @@
             <thead>
             <tr>
             <th><span>Method</span></th>
+            <th><span>Marketplace</span></th>
             <th><span>Response Status</span></th>
             <th><span>Request Url</span></th>
             <th></th>
@@ -23,6 +24,7 @@
             <tbody>
             <tr *ngFor="let mocks of mocks ;trackBy: trackId">
                 <td>{{mocks.method}}</td>
+                <td>{{mocks.marketplace}}</td>
                 <td>{{mocks.response_status}}</td>
                 <td>{{mocks.request_url}}</td>
 

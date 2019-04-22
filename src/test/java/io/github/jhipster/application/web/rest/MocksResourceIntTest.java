@@ -63,6 +63,9 @@ public class MocksResourceIntTest {
     private static final String DEFAULT_RESPONSE_STATUS = "AAAAAAAAAA";
     private static final String UPDATED_RESPONSE_STATUS = "BBBBBBBBBB";
 
+    private static final String DEFAULT_MARKETPLACE = "AAAAAAAAAA";
+    private static final String UPDATED_MARKETPLACE = "BBBBBBBBBB";
+
     @Autowired
     private MocksRepository mocksRepository;
 
@@ -108,7 +111,8 @@ public class MocksResourceIntTest {
             .request_body(DEFAULT_REQUEST_BODY)
             .response_headers(DEFAULT_RESPONSE_HEADERS)
             .response_body(DEFAULT_RESPONSE_BODY)
-            .response_status(DEFAULT_RESPONSE_STATUS);
+            .response_status(DEFAULT_RESPONSE_STATUS)
+            .marketplace(DEFAULT_MARKETPLACE);
         return mocks;
     }
 
@@ -139,6 +143,7 @@ public class MocksResourceIntTest {
         assertThat(testMocks.getResponse_headers()).isEqualTo(DEFAULT_RESPONSE_HEADERS);
         assertThat(testMocks.getResponse_body()).isEqualTo(DEFAULT_RESPONSE_BODY);
         assertThat(testMocks.getResponse_status()).isEqualTo(DEFAULT_RESPONSE_STATUS);
+        assertThat(testMocks.getMarketplace()).isEqualTo(DEFAULT_MARKETPLACE);
     }
 
     @Test
@@ -175,7 +180,8 @@ public class MocksResourceIntTest {
             .andExpect(jsonPath("$.[*].request_body").value(hasItem(DEFAULT_REQUEST_BODY.toString())))
             .andExpect(jsonPath("$.[*].response_headers").value(hasItem(DEFAULT_RESPONSE_HEADERS.toString())))
             .andExpect(jsonPath("$.[*].response_body").value(hasItem(DEFAULT_RESPONSE_BODY.toString())))
-            .andExpect(jsonPath("$.[*].response_status").value(hasItem(DEFAULT_RESPONSE_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].response_status").value(hasItem(DEFAULT_RESPONSE_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].marketplace").value(hasItem(DEFAULT_MARKETPLACE.toString())));
     }
     
     @Test
@@ -194,7 +200,8 @@ public class MocksResourceIntTest {
             .andExpect(jsonPath("$.request_body").value(DEFAULT_REQUEST_BODY.toString()))
             .andExpect(jsonPath("$.response_headers").value(DEFAULT_RESPONSE_HEADERS.toString()))
             .andExpect(jsonPath("$.response_body").value(DEFAULT_RESPONSE_BODY.toString()))
-            .andExpect(jsonPath("$.response_status").value(DEFAULT_RESPONSE_STATUS.toString()));
+            .andExpect(jsonPath("$.response_status").value(DEFAULT_RESPONSE_STATUS.toString()))
+            .andExpect(jsonPath("$.marketplace").value(DEFAULT_MARKETPLACE.toString()));
     }
 
     @Test
@@ -220,7 +227,8 @@ public class MocksResourceIntTest {
             .request_body(UPDATED_REQUEST_BODY)
             .response_headers(UPDATED_RESPONSE_HEADERS)
             .response_body(UPDATED_RESPONSE_BODY)
-            .response_status(UPDATED_RESPONSE_STATUS);
+            .response_status(UPDATED_RESPONSE_STATUS)
+            .marketplace(UPDATED_MARKETPLACE);
 
         restMocksMockMvc.perform(put("/api/mocks")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -238,6 +246,7 @@ public class MocksResourceIntTest {
         assertThat(testMocks.getResponse_headers()).isEqualTo(UPDATED_RESPONSE_HEADERS);
         assertThat(testMocks.getResponse_body()).isEqualTo(UPDATED_RESPONSE_BODY);
         assertThat(testMocks.getResponse_status()).isEqualTo(UPDATED_RESPONSE_STATUS);
+        assertThat(testMocks.getMarketplace()).isEqualTo(UPDATED_MARKETPLACE);
     }
 
     @Test

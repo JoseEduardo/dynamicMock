@@ -2,12 +2,15 @@ package io.github.jhipster.application.domain;
 
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.http.HttpHeaders;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * A Mocks.
@@ -40,6 +43,9 @@ public class Mocks implements Serializable {
 
     @Field("response_status")
     private String response_status;
+
+    @Field("marketplace")
+    private String marketplace;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
@@ -161,6 +167,19 @@ public class Mocks implements Serializable {
     public void setResponse_status(String response_status) {
         this.response_status = response_status;
     }
+
+    public String getMarketplace() {
+        return marketplace;
+    }
+
+    public Mocks marketplace(String marketplace) {
+        this.marketplace = marketplace;
+        return this;
+    }
+
+    public void setMarketplace(String marketplace) {
+        this.marketplace = marketplace;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -194,6 +213,7 @@ public class Mocks implements Serializable {
             ", response_headers='" + getResponse_headers() + "'" +
             ", response_body='" + getResponse_body() + "'" +
             ", response_status='" + getResponse_status() + "'" +
+            ", marketplace='" + getMarketplace() + "'" +
             "}";
     }
 }
