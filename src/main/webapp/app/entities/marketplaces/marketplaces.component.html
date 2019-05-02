@@ -17,6 +17,7 @@
             <th><span>ID</span></th>
             <th><span>Marketplace</span></th>
             <th><span>Marketplace Url</span></th>
+            <th><span>Is Fake</span></th>
             <th></th>
             </tr>
             </thead>
@@ -25,6 +26,7 @@
                 <td><a [routerLink]="['/marketplaces', marketplaces.id, 'view' ]">{{marketplaces.id}}</a></td>
                 <td>{{marketplaces.marketplace}}</td>
                 <td>{{marketplaces.marketplace_url}}</td>
+                <td>{{marketplaces.is_fake}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

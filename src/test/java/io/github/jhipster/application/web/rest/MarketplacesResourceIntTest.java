@@ -45,6 +45,9 @@ public class MarketplacesResourceIntTest {
     private static final String DEFAULT_MARKETPLACE_URL = "AAAAAAAAAA";
     private static final String UPDATED_MARKETPLACE_URL = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_FAKE = false;
+    private static final Boolean UPDATED_IS_FAKE = true;
+
     @Autowired
     private MarketplacesRepository marketplacesRepository;
 
@@ -88,7 +91,8 @@ public class MarketplacesResourceIntTest {
     public static Marketplaces createEntity() {
         Marketplaces marketplaces = new Marketplaces()
             .marketplace(DEFAULT_MARKETPLACE)
-            .marketplace_url(DEFAULT_MARKETPLACE_URL);
+            .marketplace_url(DEFAULT_MARKETPLACE_URL)
+            .is_fake(DEFAULT_IS_FAKE);
         return marketplaces;
     }
 
@@ -114,6 +118,7 @@ public class MarketplacesResourceIntTest {
         Marketplaces testMarketplaces = marketplacesList.get(marketplacesList.size() - 1);
         assertThat(testMarketplaces.getMarketplace()).isEqualTo(DEFAULT_MARKETPLACE);
         assertThat(testMarketplaces.getMarketplace_url()).isEqualTo(DEFAULT_MARKETPLACE_URL);
+        assertThat(testMarketplaces.isIs_fake()).isEqualTo(DEFAULT_IS_FAKE);
     }
 
     @Test
@@ -145,7 +150,8 @@ public class MarketplacesResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(marketplaces.getId())))
             .andExpect(jsonPath("$.[*].marketplace").value(hasItem(DEFAULT_MARKETPLACE.toString())))
-            .andExpect(jsonPath("$.[*].marketplace_url").value(hasItem(DEFAULT_MARKETPLACE_URL.toString())));
+            .andExpect(jsonPath("$.[*].marketplace_url").value(hasItem(DEFAULT_MARKETPLACE_URL.toString())))
+            .andExpect(jsonPath("$.[*].is_fake").value(hasItem(DEFAULT_IS_FAKE.booleanValue())));
     }
     
     @Test
@@ -159,7 +165,8 @@ public class MarketplacesResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(marketplaces.getId()))
             .andExpect(jsonPath("$.marketplace").value(DEFAULT_MARKETPLACE.toString()))
-            .andExpect(jsonPath("$.marketplace_url").value(DEFAULT_MARKETPLACE_URL.toString()));
+            .andExpect(jsonPath("$.marketplace_url").value(DEFAULT_MARKETPLACE_URL.toString()))
+            .andExpect(jsonPath("$.is_fake").value(DEFAULT_IS_FAKE.booleanValue()));
     }
 
     @Test
@@ -180,7 +187,8 @@ public class MarketplacesResourceIntTest {
         Marketplaces updatedMarketplaces = marketplacesRepository.findById(marketplaces.getId()).get();
         updatedMarketplaces
             .marketplace(UPDATED_MARKETPLACE)
-            .marketplace_url(UPDATED_MARKETPLACE_URL);
+            .marketplace_url(UPDATED_MARKETPLACE_URL)
+            .is_fake(UPDATED_IS_FAKE);
 
         restMarketplacesMockMvc.perform(put("/api/marketplaces")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -193,6 +201,7 @@ public class MarketplacesResourceIntTest {
         Marketplaces testMarketplaces = marketplacesList.get(marketplacesList.size() - 1);
         assertThat(testMarketplaces.getMarketplace()).isEqualTo(UPDATED_MARKETPLACE);
         assertThat(testMarketplaces.getMarketplace_url()).isEqualTo(UPDATED_MARKETPLACE_URL);
+        assertThat(testMarketplaces.isIs_fake()).isEqualTo(UPDATED_IS_FAKE);
     }
 
     @Test

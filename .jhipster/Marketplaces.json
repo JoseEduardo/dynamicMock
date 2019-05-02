@@ -12,6 +12,11 @@
             "fieldName": "marketplace_url",
             "fieldType": "String",
             "fieldValidateRules": []
+        },
+        {
+            "fieldName": "is_fake",
+            "fieldType": "Boolean",
+            "fieldValidateRules": []
         }
     ],
     "dto": "no",

@@ -1,6 +1,6 @@
 package io.github.jhipster.application.service;
 
-import com.google.common.collect.Lists;
+import io.github.jhipster.application.domain.MarketplaceCallDTO;
 import io.github.jhipster.application.domain.Marketplaces;
 import io.github.jhipster.application.domain.Mocks;
 import io.github.jhipster.application.domain.MocksHeader;
@@ -47,45 +47,63 @@ public class BusinessMockService {
                 headers.add(headerName, request.getHeader(headerName));
             }
         }
-        List<String> lstUrl = findNewURI(request, reqParam);
-        URI newURI = new URI(lstUrl.get(0));
-        String relativeUrl = lstUrl.get(1);
+        MarketplaceCallDTO mktDto = findNewURI(request, reqParam);
 
-        log.info("Processando chamada {}", relativeUrl);
-
-        Optional<Mocks> optMockedCall = mocksService.findByRequestUrlAndMethod(relativeUrl, request.getMethod());
+        log.info("Processando chamada {}", mktDto.getRelativeUrl());
+        Optional<Mocks> optMockedCall = mocksService.findByRequestUrlAndMethod(mktDto.getRelativeUrl(), request.getMethod());
         if (optMockedCall.isPresent()) {
-            Mocks mockedCall = optMockedCall.get();
-
-            List<MocksHeader> responseHeaders = mockedCall.getResponse_headers();
-            HttpHeaders respHeader = new HttpHeaders();
-            responseHeaders.forEach(x -> respHeader.add(x.getKey(), x.getValue()));
-
-            HttpStatus httpStatus = HttpStatus.valueOf(Integer.valueOf(mockedCall.getResponse_status()));
-            return new ResponseEntity(mockedCall.getResponse_body(), respHeader, httpStatus);
+            log.info("Retornando MOCK chamada {}", mktDto.getRelativeUrl());
+            return returnByMock(mktDto.getRelativeUrl(), optMockedCall.get());
         }
 
-        RequestEntity<Object> newRequest = new RequestEntity<>(body, headers, HttpMethod.valueOf(request.getMethod()), newURI);
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-        ResponseEntity<Object> retObject = restTemplate.exchange(newRequest, Object.class);
+        ResponseEntity<Object> retObject;
+        if (mktDto.isFake()) {
+            log.info("Retornando FAKE_MOCK chamada {}", mktDto.getRelativeUrl());
+            retObject = returnFakeMock();
+        } else {
+            log.info("Retornando REAL chamada {}", mktDto.getRelativeUrl());
+            retObject = returnByMarketplaceCall(body, request, headers, mktDto.getNewURI());
+        }
 
         Mocks mocks = new Mocks();
         mocks.setMethod(request.getMethod());
         mocks.setRequest_body(body);
-        mocks.setRequest_url(relativeUrl);
+        mocks.setRequest_url(mktDto.getRelativeUrl());
         mocks.setRequestHeadersByHeader(headers);
         mocks.setResponse_status(retObject.getStatusCode().toString());
         mocks.setResponse_body(isNull(retObject.getBody()) ? "" : new ObjectMapper().writeValueAsString(retObject.getBody()));
         mocks.setResponseHeadersByHeader(retObject.getHeaders());
-        mocks.setMarketplace(lstUrl.get(2));
+        mocks.setMarketplace(mktDto.getMarketplace());
 
         mocksService.save(mocks);
-        log.info("Retornando Conteudo chamada {}", relativeUrl);
+        log.info("Retornando Conteudo chamada {}", mktDto.getRelativeUrl());
         return retObject;
     }
 
-    private List<String> findNewURI(HttpServletRequest request, Map<String, String> reqParam) throws URISyntaxException, NotFoundException {
+    private ResponseEntity<Object> returnByMarketplaceCall(String body, HttpServletRequest request, HttpHeaders headers, URI newURI) {
+        RequestEntity<Object> newRequest = new RequestEntity<>(body, headers, HttpMethod.valueOf(request.getMethod()), newURI);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+        return restTemplate.exchange(newRequest, Object.class);
+    }
+
+    private ResponseEntity<Object> returnFakeMock() {
+        HttpHeaders respHeader = new HttpHeaders();
+        respHeader.add("Content-Type", "application/json");
+        String defaultBodyResp = "{\"status\": \"ok\"}";
+        return new ResponseEntity(defaultBodyResp, respHeader, HttpStatus.OK);
+    }
+
+    private ResponseEntity<Object> returnByMock(String relativeUrl, Mocks mockedCall) {
+        List<MocksHeader> responseHeaders = mockedCall.getResponse_headers();
+        HttpHeaders respHeader = new HttpHeaders();
+        responseHeaders.forEach(x -> respHeader.add(x.getKey(), x.getValue()));
+
+        HttpStatus httpStatus = HttpStatus.valueOf(Integer.valueOf(mockedCall.getResponse_status()));
+        return new ResponseEntity(mockedCall.getResponse_body(), respHeader, httpStatus);
+    }
+
+    private MarketplaceCallDTO findNewURI(HttpServletRequest request, Map<String, String> reqParam) throws URISyntaxException, NotFoundException {
         String relPath = request.getRequestURI();
         String relPathWtotMock = relPath.replace("/mock", "");
         String marketplaceName = relPathWtotMock.replace("/", "");
@@ -104,8 +122,7 @@ public class BusinessMockService {
         String resultUrl = String.format(URI_FINAL, marketplaceUrl, finalPath, requestParam);
 
         String resultPartUrl = String.format(URI_PART_FINAL, relPathWtotMock, requestParam);
-
-        return Lists.newArrayList(resultUrl, resultPartUrl, marketplaces.getMarketplace());
+        return new MarketplaceCallDTO(new URI(resultUrl), resultPartUrl, marketplaces.isIs_fake(), marketplaces.getMarketplace());
     }
 
 }

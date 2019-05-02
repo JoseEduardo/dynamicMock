@@ -138,9 +138,7 @@ public class MocksResourceIntTest {
         Mocks testMocks = mocksList.get(mocksList.size() - 1);
         assertThat(testMocks.getMethod()).isEqualTo(DEFAULT_METHOD);
         assertThat(testMocks.getRequest_url()).isEqualTo(DEFAULT_REQUEST_URL);
-        assertThat(testMocks.getRequest_headers()).isEqualTo(DEFAULT_REQUEST_HEADERS);
         assertThat(testMocks.getRequest_body()).isEqualTo(DEFAULT_REQUEST_BODY);
-        assertThat(testMocks.getResponse_headers()).isEqualTo(DEFAULT_RESPONSE_HEADERS);
         assertThat(testMocks.getResponse_body()).isEqualTo(DEFAULT_RESPONSE_BODY);
         assertThat(testMocks.getResponse_status()).isEqualTo(DEFAULT_RESPONSE_STATUS);
         assertThat(testMocks.getMarketplace()).isEqualTo(DEFAULT_MARKETPLACE);
@@ -176,9 +174,7 @@ public class MocksResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(mocks.getId())))
             .andExpect(jsonPath("$.[*].method").value(hasItem(DEFAULT_METHOD.toString())))
             .andExpect(jsonPath("$.[*].request_url").value(hasItem(DEFAULT_REQUEST_URL.toString())))
-            .andExpect(jsonPath("$.[*].request_headers").value(hasItem(DEFAULT_REQUEST_HEADERS.toString())))
             .andExpect(jsonPath("$.[*].request_body").value(hasItem(DEFAULT_REQUEST_BODY.toString())))
-            .andExpect(jsonPath("$.[*].response_headers").value(hasItem(DEFAULT_RESPONSE_HEADERS.toString())))
             .andExpect(jsonPath("$.[*].response_body").value(hasItem(DEFAULT_RESPONSE_BODY.toString())))
             .andExpect(jsonPath("$.[*].response_status").value(hasItem(DEFAULT_RESPONSE_STATUS.toString())))
             .andExpect(jsonPath("$.[*].marketplace").value(hasItem(DEFAULT_MARKETPLACE.toString())));
@@ -196,9 +192,7 @@ public class MocksResourceIntTest {
             .andExpect(jsonPath("$.id").value(mocks.getId()))
             .andExpect(jsonPath("$.method").value(DEFAULT_METHOD.toString()))
             .andExpect(jsonPath("$.request_url").value(DEFAULT_REQUEST_URL.toString()))
-            .andExpect(jsonPath("$.request_headers").value(DEFAULT_REQUEST_HEADERS.toString()))
             .andExpect(jsonPath("$.request_body").value(DEFAULT_REQUEST_BODY.toString()))
-            .andExpect(jsonPath("$.response_headers").value(DEFAULT_RESPONSE_HEADERS.toString()))
             .andExpect(jsonPath("$.response_body").value(DEFAULT_RESPONSE_BODY.toString()))
             .andExpect(jsonPath("$.response_status").value(DEFAULT_RESPONSE_STATUS.toString()))
             .andExpect(jsonPath("$.marketplace").value(DEFAULT_MARKETPLACE.toString()));
@@ -241,9 +235,7 @@ public class MocksResourceIntTest {
         Mocks testMocks = mocksList.get(mocksList.size() - 1);
         assertThat(testMocks.getMethod()).isEqualTo(UPDATED_METHOD);
         assertThat(testMocks.getRequest_url()).isEqualTo(UPDATED_REQUEST_URL);
-        assertThat(testMocks.getRequest_headers()).isEqualTo(UPDATED_REQUEST_HEADERS);
         assertThat(testMocks.getRequest_body()).isEqualTo(UPDATED_REQUEST_BODY);
-        assertThat(testMocks.getResponse_headers()).isEqualTo(UPDATED_RESPONSE_HEADERS);
         assertThat(testMocks.getResponse_body()).isEqualTo(UPDATED_RESPONSE_BODY);
         assertThat(testMocks.getResponse_status()).isEqualTo(UPDATED_RESPONSE_STATUS);
         assertThat(testMocks.getMarketplace()).isEqualTo(UPDATED_MARKETPLACE);

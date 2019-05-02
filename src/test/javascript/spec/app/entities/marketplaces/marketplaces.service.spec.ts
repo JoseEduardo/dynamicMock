@@ -21,7 +21,7 @@ describe('Service Tests', () => {
             service = injector.get(MarketplacesService);
             httpMock = injector.get(HttpTestingController);
 
-            elemDefault = new Marketplaces('ID', 'AAAAAAA', 'AAAAAAA');
+            elemDefault = new Marketplaces('ID', 'AAAAAAA', 'AAAAAAA', false);
         });
 
         describe('Service methods', async () => {
@@ -56,7 +56,8 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         marketplace: 'BBBBBB',
-                        marketplace_url: 'BBBBBB'
+                        marketplace_url: 'BBBBBB',
+                        is_fake: true
                     },
                     elemDefault
                 );
@@ -74,7 +75,8 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         marketplace: 'BBBBBB',
-                        marketplace_url: 'BBBBBB'
+                        marketplace_url: 'BBBBBB',
+                        is_fake: true
                     },
                     elemDefault
                 );

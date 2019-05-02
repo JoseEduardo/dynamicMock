@@ -26,6 +26,9 @@ public class Marketplaces implements Serializable {
     @Field("marketplace_url")
     private String marketplace_url;
 
+    @Field("is_fake")
+    private Boolean is_fake;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
         return id;
@@ -60,6 +63,19 @@ public class Marketplaces implements Serializable {
     public void setMarketplace_url(String marketplace_url) {
         this.marketplace_url = marketplace_url;
     }
+
+    public Boolean isIs_fake() {
+        return is_fake;
+    }
+
+    public Marketplaces is_fake(Boolean is_fake) {
+        this.is_fake = is_fake;
+        return this;
+    }
+
+    public void setIs_fake(Boolean is_fake) {
+        this.is_fake = is_fake;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -88,6 +104,7 @@ public class Marketplaces implements Serializable {
             "id=" + getId() +
             ", marketplace='" + getMarketplace() + "'" +
             ", marketplace_url='" + getMarketplace_url() + "'" +
+            ", is_fake='" + isIs_fake() + "'" +
             "}";
     }
 }
